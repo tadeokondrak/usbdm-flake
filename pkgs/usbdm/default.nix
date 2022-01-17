@@ -1,10 +1,12 @@
 { stdenv
+, lib
 , fetchFromGitHub
 , wxGTK30
-, jdk
 , libusb
 , xercesc
 , tcl
+, jdk ? null
+, javaSupport ? false
 }:
 
 stdenv.mkDerivation {
@@ -22,11 +24,12 @@ stdenv.mkDerivation {
 
   buildInputs = [
     wxGTK30
-    jdk
     libusb
     xercesc
     tcl
-  ];
+  ]
+  ++ lib.optional javaSupport jdk
+  ;
 
   hardeningDisable = [ "fortify" ];
 
@@ -34,6 +37,10 @@ stdenv.mkDerivation {
     patchShebangs .
     substituteInPlace Common.mk \
         --replace "/usr/share/java/java_defaults.mk" "/dev/null"
+    for f in Makefile-x{32,64}.mk; do
+        substituteInPlace "$f" \
+            --replace "UsbdmJni_DLL" "${if javaSupport then "UsbdmJni_DLL" else ""}"
+    done
     substituteInPlace Makefile-x64.mk \
         --replace "USBDM_API_Example" "" \
         --replace "USBDM_Programmer_API_Example" ""
