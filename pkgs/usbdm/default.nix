@@ -60,14 +60,14 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/{share/{applications,pixmaps,doc/usbdm,usbdm,man/man1},etc/udev/rules.d}
-    cp -r PackageFiles/MiscellaneousLinux/Hardware-Chip.png $out/share/pixmaps
-    cp -r PackageFiles/MiscellaneousLinux/*.desktop $out/share/applications
-    cp -r PackageFiles/MiscellaneousLinux/usbdm.rules $out/etc/udev/rules.d
-    cp -r PackageFiles/MiscellaneousLinux/{changelog.Debian.gz,copyright} $out/share/doc/usbdm
+    cp PackageFiles/MiscellaneousLinux/Hardware-Chip.png $out/share/pixmaps
+    cp PackageFiles/MiscellaneousLinux/*.desktop $out/share/applications
+    cp PackageFiles/MiscellaneousLinux/usbdm.rules $out/etc/udev/rules.d/46-usbdm.rules
+    cp PackageFiles/MiscellaneousLinux/{changelog.Debian.gz,copyright} $out/share/doc/usbdm
+    cp PackageFiles/Miscellaneous/{nano.specs,*.xlkr,error.wav} $out/share/usbdm
+    cp PackageFiles/MiscellaneousLinux/{TryProgrammer,usbdm.rules} $out/share/usbdm
+    cp PackageFiles/Scripts/*.tcl $out/share/usbdm
     cp -r PackageFiles/{WizardPatches,DeviceData,Stationery,Examples,FlashImages,LaunchConfig} $out/share/usbdm
-    cp -r PackageFiles/Miscellaneous/{nano.specs,*.xlkr,error.wav} $out/share/usbdm
-    cp -r PackageFiles/MiscellaneousLinux/{TryProgrammer,usbdm.rules} $out/share/usbdm
-    cp -r PackageFiles/Scripts/*.tcl $out/share/usbdm
     cp -r PackageFiles/lib $out/lib
     cp -r PackageFiles/bin $out/bin
     rm -f $out/bin/{CopyFlash,*TestImage,*Example,Test*}
